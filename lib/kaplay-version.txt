@@ -1,0 +1,2 @@
+Kaboom version used is 3000.0.0
+Was downloaded from this link : https://unpkg.com/kaplay@3001.0.0-alpha.20/dist/kaplay.mjs
