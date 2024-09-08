@@ -28,13 +28,13 @@ const player1 = {
     isAttacking: false,
     hasDeathAnimationPlayed: false,
     health: 100,
-    displayedHealth: 100,  // Added for smooth animation of health bar
+    displayedHealth: 100,  
     state: 'idle', 
     frameIndex: 0,
     frameElapsedTime: 0,
     frameDuration: 90,
     image: new Image(),
-    facingDirection: 'right', // Added for facing direction
+    facingDirection: 'right', 
     states: {
         idle: { imageSrc: 'assets/idle-player1.png', frames: 8, frameDuration: 90 },
         run: { imageSrc: 'assets/run-player1.png', frames: 8, frameDuration: 90 },
@@ -63,7 +63,7 @@ const player2 = {
     frameElapsedTime: 0,
     frameDuration: 110,
     image: new Image(),
-    facingDirection: 'right', // Added for facing direction
+    facingDirection: 'right', 
     states: {
         idle: { imageSrc: 'assets/idle-player2.png', frames: 4, frameDuration: 90 },
         run: { imageSrc: 'assets/run-player2.png', frames: 8, frameDuration: 90 },
@@ -95,13 +95,13 @@ function updateAnimation(character) {
                     
                     // Check if the animation has finished playing
                     if (character.frameIndex === 0) {
-                        character.hasDeathAnimationPlayed = true; // Mark animation as played
+                        character.hasDeathAnimationPlayed = true; 
                         character.frameIndex = character.states[character.state].frames - 1;
                     }
                 }
             }
         } else {
-            // Handle other states
+            
             character.frameElapsedTime += 20;
             if (character.frameElapsedTime >= character.states[character.state].frameDuration) {
                 character.frameElapsedTime = 0;
@@ -117,7 +117,7 @@ function switchSprite(character, action, direction) {
         character.state = action;
         character.image.src = character.states[action].imageSrc;
         character.frameIndex = 0;
-        character.facingDirection = direction; // Update facing direction
+        character.facingDirection = direction; 
     }
 }
 
@@ -173,15 +173,15 @@ function drawHealthBar(character, element) {
         character.displayedHealth = Math.max(character.displayedHealth - decreaseSpeed, character.health);
     }
 
-    const barWidth = 50; 
-    const barHeight = 10; 
+    // const barWidth = 50; 
+    // const barHeight = 10; 
     const healthPercentage = character.displayedHealth / 100;
 
     
-    context.fillStyle = 'black';
-    context.fillRect(character.x + 225, character.y + 160, barWidth, barHeight);
-    context.fillStyle = 'red';
-    context.fillRect(character.x + 225, character.y + 160, barWidth * healthPercentage, barHeight);
+    // context.fillStyle = 'black';
+    // context.fillRect(character.x + 225, character.y + 160, barWidth, barHeight);
+    // context.fillStyle = 'red';
+    // context.fillRect(character.x + 225, character.y + 160, barWidth * healthPercentage, barHeight);
 
     
 
@@ -198,14 +198,14 @@ function drawAttack(character) {
 
     if (character.isAttacking) {
         if (character === player1) {
-            attackX = character.x ; 
+            attackX = character.x + 90 ; 
         } else if (character === player2) {
-            attackX = character.x + 370; 
+            attackX = character.x + 300; 
         }
 
         const attackY = character.y + character.height / 2 - attackSize / 2; 
-        context.fillStyle = character.color;
-        context.fillRect(attackX, attackY, attackSize, attackSize);
+        // context.fillStyle = character.color;
+        // context.fillRect(attackX, attackY, attackSize, attackSize);
 
         // Check for collision with the opponent and decrease health if hit
         const opponent = character === player1 ? player2 : player1;
@@ -252,11 +252,19 @@ function updatePlayer(character) {
         character.y = groundY;
     }
 
-    // Determine image state
+    // Stop actions if the player is dead
     if (character.health <= 0) {
         character.isDead = true;
+        character.velocityY = 0;
+        character.y += 20;
         switchSprite(character, 'death', character.facingDirection);
-    } else if (character.isAttacking) {
+        drawPlayer(character);
+        drawHealthBar(character, character === player1 ? playerHealthElement : enemyHealthElement);
+        return;  // Exit early to prevent other state changes
+    }
+
+    
+    if (character.isAttacking) {
         switchSprite(character, 'attack', character.facingDirection);
     } else if (character.velocityY < 0) {
         switchSprite(character, 'jump', character.facingDirection);
@@ -342,15 +350,19 @@ function movePlayers() {
 function attack(character) {
     if (!character.isAttacking) {
         character.isAttacking = true;
-        // Maintain the current facing direction during attack
-        switchSprite(character, 'attack', character.facingDirection); 
+        switchSprite(character, 'attack', character.facingDirection);
+
+        // Set the duration for the attack based on the number of frames and frame duration
+        const attackDuration = character.states.attack.frameDuration * character.states.attack.frames;
+
+        // Switch back to idle after the attack duration
         setTimeout(() => {
             character.isAttacking = false;
-            // Switch back to idle, maintaining the facing direction
-            if (character.state !== 'attack') {
+            // Maintain the attack animation if it's still in progress
+            if (character.state === 'attack') {
                 switchSprite(character, 'idle', character.facingDirection);
             }
-        }, character.states.attack.frameDuration * character.states.attack.frames); // Correct duration calculation
+        }, attackDuration);
     }
 }
 
@@ -410,6 +422,8 @@ function checkWin(timeUp = false) {
         displayResult("Player 1 Wins!");
         clearInterval(timerInterval); 
     } else if (timeUp) {
+        switchSprite(player1, 'idle', player1.facingDirection)
+        switchSprite(player2, 'idle', player2.facingDirection)
         if (player1.health > player2.health) {
             displayResult("Player 1 Wins!");
         } else if (player2.health > player1.health) {
@@ -425,7 +439,6 @@ var gameloopId;
 function displayResult(message) {
     resultElement.textContent = message;
     resultElement.style.display = 'block';
-    cancelAnimationFrame(gameloopId); 
     window.removeEventListener('keydown', keyDownHandler);
     window.removeEventListener('keyup', keyUpHandler);
 }
@@ -443,10 +456,4 @@ function startGame() {
     gameLoop();
 }
 
-// Initialize game
-function initializeGame() {
-    drawBackground();
-    updateTimer();
-}
-
-initializeGame();
+updateTimer();
