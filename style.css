@@ -27,6 +27,7 @@ body {
     font-size: 20px;
     margin: 0 auto;
     z-index: 1;
+    border: 2px solid white;
 }
 
 .health-bar{ 
@@ -35,6 +36,7 @@ body {
     width: 300px;
     position: relative;
     z-index: 1;
+    border: 2px solid white;
 }
 .player{
     position: absolute;
@@ -42,7 +44,7 @@ body {
     bottom: 0;
     right: 0;
     width: 100%;
-    background-color: rgb(19, 19, 128);
+    background-color: rgb(19, 128, 28);
     z-index: 1;
 }
 .ennemy{
@@ -51,7 +53,7 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: rgb(19, 19, 128);
+    background-color: rgb(19, 128, 28);
     z-index: 1;
 }
 
