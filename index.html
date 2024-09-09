@@ -6,9 +6,10 @@
     <title>Fighting Game</title>
     <link href="https://fonts.cdnfonts.com/css/public-pixel" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="./src/main.js"></script>
+    
 </head>
 <body>
+    <img class="effect" src="assets/effect.png">
     <div class="interface">
         <span class="health-bar">
             <span class="player"></span>
@@ -18,9 +19,15 @@
             <span class="ennemy"></span>
         </span>
     </div>
-    <div class="start-message">Press Enter to start the game!</div>
+    <div class="start-message">
+        Press Enter to start the game!
+        <div class="name-inputs">
+            <input type="text" autocomplete="off" id="player1Name" placeholder="Player 1 Name">
+            <input type="text" autocomplete="off" id="player2Name" placeholder="Player 2 Name">
+        </div>
+    </div>
     <div class="result"></div>
     <canvas id="gameCanvas"></canvas>
-    
+    <script src="./src/main.js"></script>
 </body>
 </html>
