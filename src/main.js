@@ -35,7 +35,6 @@ const player1 = {
     state: 'idle', 
     frameIndex: 0,
     frameElapsedTime: 0,
-    frameDuration: 90,
     image: new Image(),
     facingDirection: 'right', 
     states: {
@@ -65,11 +64,10 @@ const player2 = {
     state: 'idle',
     frameIndex: 0,
     frameElapsedTime: 0,
-    frameDuration: 110,
     image: new Image(),
     facingDirection: 'right', 
     states: {
-        idle: { imageSrc: 'assets/idle-player2.png', frames: 4, frameDuration: 90 },
+        idle: { imageSrc: 'assets/idle-player2.png', frames: 4, frameDuration: 110 },
         run: { imageSrc: 'assets/run-player2.png', frames: 8, frameDuration: 90 },
         jump: { imageSrc: 'assets/jump-player2.png', frames: 2, frameDuration: 90 },
         fall: { imageSrc: 'assets/fall-player2.png', frames: 2, frameDuration: 90 },
@@ -268,6 +266,11 @@ function checkCollision(attackX, attackY, attackSize, player, opponent) {
 
     if (!isFacingOpponent) {
         return false; 
+    }
+
+    if (!(player.isOnGround || opponent.isOnGround)){
+        return attackX < opponent.x + opponent.width &&
+        attackX + attackSize > opponent.x
     }
     
     
@@ -509,6 +512,8 @@ function checkWin(timeUp = false) {
     } else if (timeUp) {
         switchSprite(player1, 'idle', player1.facingDirection);
         switchSprite(player2, 'idle', player2.facingDirection);
+        
+        // Determine the winner based on health
         if (player1.health > player2.health) {
             displayResult(player1Name + ' Wins!');
         } else if (player2.health > player1.health) {
@@ -516,7 +521,11 @@ function checkWin(timeUp = false) {
         } else {
             displayResult("It's a Draw!");
         }
+
+        stopTimer(); // Stop the timer
     }
+
+    
 
     
 }
@@ -530,7 +539,9 @@ function displayResult(message) {
     resultElement.style.display = 'block';
     window.removeEventListener('keydown', keyDownHandler);
     window.removeEventListener('keyup', keyUpHandler);
-
+    Object.keys(keys).forEach(key => {
+        keys[key] = false;
+    });
     
     window.addEventListener('keydown', handleEscapeKeyForReset);
 }
@@ -618,6 +629,8 @@ function resetGame() {
     
     timeLeft = 60;
     updateTimer();
+    drawHealthBar(player1, playerHealthElement);
+    drawHealthBar(player2, enemyHealthElement);
 
 
     resultElement.style.display = 'none';
