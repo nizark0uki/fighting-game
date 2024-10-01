@@ -25,9 +25,25 @@
             <input type="text" autocomplete="off" id="player1Name" placeholder="Player 1 Name">
             <input type="text" autocomplete="off" id="player2Name" placeholder="Player 2 Name">
         </div>
+        <button id="howToPlay">How to Play</button>
+        <div id="instructions" class="hidden">
+            <button id="close" class="close-btn">X</button>
+            <p>First Player:</p>
+            <ul>
+                <li>Move: Q (left), D (right)</li>
+                <li>Jump: Z</li>
+                <li>Hit: Spacebar</li>
+            </ul>
+            <p>Second Player:</p>
+            <ul>
+                <li>Move: Left/Right Arrows</li>
+                <li>Jump: Up Arrow</li>
+                <li>Hit: 0 (Zero Key)</li>
+            </ul>
+            <p>Press Enter to start the game.<br>When it's game over, press Escape to replay.</p>
+        </div>
     </div>
     <div class="result"></div>
-    <img class="logo" src="assets/cpu.png">
     <canvas id="gameCanvas"></canvas>
     <script src="./src/main.js"></script>
 </body>

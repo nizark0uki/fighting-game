@@ -6,7 +6,17 @@ canvas.height = 610;
 const background = new Image();
 background.src = 'assets/background.jpg';
 
+const howToPlay = document.getElementById('howToPlay');
+const instructions = document.getElementById('instructions');
+const close = document.getElementById('close');
 
+howToPlay.addEventListener('click', () => {
+    instructions.classList.remove('hidden');
+});
+
+close.addEventListener('click', () => {
+    instructions.classList.add('hidden');
+});
 // Player settings 
 
 
@@ -42,7 +52,7 @@ const player1 = {
         run: { imageSrc: 'assets/run-player1.png', frames: 8, frameDuration: 90 },
         jump: { imageSrc: 'assets/jump-player1.png', frames: 2, frameDuration: 90 },
         fall: { imageSrc: 'assets/fall-player1.png', frames: 2, frameDuration: 90 },
-        attack: { imageSrc: 'assets/attack-player1.png', frames: 2, frameDuration: 1000 },
+        attack: { imageSrc: 'assets/attack-player1.png', frames: 2, frameDuration: 250 },
         death: { imageSrc: 'assets/death-player1.png', frames: 6, frameDuration: 90 },
     },
 };

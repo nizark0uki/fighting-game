@@ -75,7 +75,6 @@ body {
 
 .name-inputs input {
     font-size: 16px;
-    margin: 10px;
     padding: 10px;
     margin: 30px;
     border: 2px solid rgb(0, 0, 0);
@@ -85,12 +84,43 @@ body {
     text-align: center;
 }
 
-.logo{
+#howToPlay {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: gray;
+    color: white;
+    font-family: 'Public Pixel', sans-serif;
+    text-align: center;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#instructions {
     position: absolute;
-    right: 90px;
-    bottom: 20px;
-    height: 40px;
-    opacity: 0.8;
+    top: -60%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: transparent;
+    color: maroon;
+    border: none;
+    cursor: pointer;
+}
+
+li{
+    list-style: none;
 }
 
 #gameCanvas {
