@@ -42,7 +42,7 @@ const player1 = {
         run: { imageSrc: 'assets/run-player1.png', frames: 8, frameDuration: 90 },
         jump: { imageSrc: 'assets/jump-player1.png', frames: 2, frameDuration: 90 },
         fall: { imageSrc: 'assets/fall-player1.png', frames: 2, frameDuration: 90 },
-        attack: { imageSrc: 'assets/attack-player1.png', frames: 2, frameDuration: 250 },
+        attack: { imageSrc: 'assets/attack-player1.png', frames: 2, frameDuration: 90 },
         death: { imageSrc: 'assets/death-player1.png', frames: 6, frameDuration: 90 },
     },
 };
