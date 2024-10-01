@@ -579,6 +579,7 @@ function startGame() {
     if(gameloopId){
         cancelAnimationFrame(gameloopId)
     }
+    instructions.classList.add('hidden');
     startMessage.style.display = 'none';
     allowKeyEvents = true;
     gameLoop();
